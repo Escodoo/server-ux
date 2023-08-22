@@ -5,7 +5,9 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from ast import literal_eval
 from odoo.osv import expression
+import logging
 
+_logger = logging.getLogger(__name__)
 
 class TierValidation(models.AbstractModel):
     _name = "tier.validation"
@@ -179,6 +181,7 @@ class TierValidation(models.AbstractModel):
 
     @api.multi
     def write(self, vals):
+        _logger.warn(vals)
         for rec in self:
             if rec._check_state_conditions(vals):
                 if rec.need_validation:
@@ -193,6 +196,7 @@ class TierValidation(models.AbstractModel):
                     raise ValidationError(_(
                         "A validation process is still open for at least "
                         "one record."))
+            _logger.warn(getattr(rec, self._state_field))
             if (rec.review_ids and getattr(rec, self._state_field) in
                     self._state_from and not vals.get(self._state_field) in
                     (self._state_to + [self._cancel_state]) and not
