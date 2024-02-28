@@ -25,4 +25,5 @@
         "templates/tier_validation_templates.xml",
     ],
     "qweb": ["static/src/xml/systray.xml", "static/src/xml/tier_review_template.xml"],
+    "post_init_hook": "post_init_hook",
 }
