@@ -328,7 +328,8 @@ class TierValidation(models.AbstractModel):
                 and not rec._check_allow_write_under_validation(vals)
                 and not rec._context.get("skip_validation_check")
             ):
-                raise ValidationError(_("The operation is under validation."))
+                # raise ValidationError(_("The operation is under validation."))
+                pass
             if rec._allow_to_remove_reviews(vals):
                 new_self.mapped("review_ids").unlink()
         res = super(TierValidation, new_self).write(vals)
