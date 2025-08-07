@@ -391,31 +391,31 @@ class TierValidation(models.AbstractModel):
                         )
                     )
             # Write under validation
-            if (
-                rec.review_ids
-                and getattr(rec, self._state_field) in self._state_from
-                and not vals.get(self._state_field)
-                in (self._state_to + [self._cancel_state])
-                and not rec._check_allow_write_under_validation(vals)
-                and not rec._context.get("skip_validation_check")
-            ):
-                (
-                    allowed_fields,
-                    not_allowed_fields,
-                ) = rec._get_fields_to_write_validation(
-                    vals, rec._get_under_validation_exceptions
-                )
-                raise ValidationError(
-                    _(
-                        "You are not allowed to write those fields under validation.\n"
-                        "- %(not_allowed_fields)s\n\n"
-                        "Only those fields can be modified:\n- %(allowed_fields)s"
-                    )
-                    % {
-                        "not_allowed_fields": "\n- ".join(not_allowed_fields),
-                        "allowed_fields": "\n- ".join(allowed_fields),
-                    }
-                )
+            # if (
+            #     rec.review_ids
+            #     and getattr(rec, self._state_field) in self._state_from
+            #     and not vals.get(self._state_field)
+            #     in (self._state_to + [self._cancel_state])
+            #     and not rec._check_allow_write_under_validation(vals)
+            #     and not rec._context.get("skip_validation_check")
+            # ):
+            #     (
+            #         allowed_fields,
+            #         not_allowed_fields,
+            #     ) = rec._get_fields_to_write_validation(
+            #         vals, rec._get_under_validation_exceptions
+            #     )
+            #     raise ValidationError(
+            #         _(
+            #             "You are not allowed to write those fields under validation.\n"
+            #             "- %(not_allowed_fields)s\n\n"
+            #             "Only those fields can be modified:\n- %(allowed_fields)s"
+            #         )
+            #         % {
+            #             "not_allowed_fields": "\n- ".join(not_allowed_fields),
+            #             "allowed_fields": "\n- ".join(allowed_fields),
+            #         }
+            #     )
 
             # Write after validation. Check only if Tier Validation Exception is created
             if (
